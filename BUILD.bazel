@@ -1,0 +1,11 @@
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+
+compile_pip_requirements(
+  name = "pip_requirements",
+  extra_args = [
+    "--strip-extras",
+  ],
+  requirements_in = "requirements.in",
+  requirements_txt = "requirements_lock.txt",
+  tags = ["manual"], # TODO: issues/5 - why does github action fail on pip_requirements_test?
+)
