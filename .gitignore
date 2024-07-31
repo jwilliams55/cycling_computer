@@ -151,3 +151,4 @@ dmypy.json
 .pytype/
 
 bazel-*
+MODULE.bazel.lock

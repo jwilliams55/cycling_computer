@@ -1,6 +1,38 @@
 bazel_dep(name = "pico-sdk", version = "1.6.0-rc1")
-bazel_dep(name = "rules_python", version = "0.33.2")
+bazel_dep(name = "rules_python", version = "0.34.0")
+bazel_dep(name = "pigweed")
 
+# Git overrides
+# #############
+#
+local_path_override(
+  module_name = "pigweed",
+  path = "third_party/pigweed",
+)
+
+# TODO: why am I overriding this here instead of pigweed doing it?
+local_path_override(
+  module_name = "pw_toolchain",
+  path = "third_party/pigweed/pw_toolchain_bazel",
+)
+
+# TODO: why am I overriding this here instead of pigweed doing it?
+git_override(
+    module_name = "picotool",
+    commit = "6cd88302465919ff2005c88494f4f8dafc3b207e",
+    remote = "https://github.com/armandomontanez/picotool",
+)
+
+# TODO: why am I overriding this here instead of pigweed doing it?
+git_override(
+    module_name = "nanopb",
+    commit = "f9191cd0be4177abd0d04546d61d59a9b6c32de3",
+    remote = "https://github.com/nanopb/nanopb.git",
+)
+
+# Setup python
+# ############
+#
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
   configure_coverage_tool = True,
@@ -12,3 +44,5 @@ pip.parse(
   hub_name = "pip",
   requirements_lock = "//:requirements_lock.txt",
 )
+
+
