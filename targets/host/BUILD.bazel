@@ -1,0 +1,9 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "system",
+    srcs = ["system.cc"],
+    deps = [
+        "@pigweed//pw_thread:sleep",
+    ],
+)

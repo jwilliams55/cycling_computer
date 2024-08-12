@@ -1,19 +1,28 @@
-bazel_dep(name = "pico-sdk", version = "1.6.0-rc1")
+bazel_dep(name = "pico-sdk", version = "2.0.0")
 bazel_dep(name = "rules_python", version = "0.34.0")
 bazel_dep(name = "pigweed")
+bazel_dep(name = "pw_toolchain")
 
 # Git overrides
 # #############
 #
-local_path_override(
-  module_name = "pigweed",
-  path = "third_party/pigweed",
+git_override(
+    module_name = "pigweed",
+    # ROLL: Warning: this entry is automatically updated.
+    # ROLL: Last updated 2024-08-12.
+    # ROLL: By https://cr-buildbucket.appspot.com/build/8739788060604554929.
+    commit = "17252280da5edda418bd36fed049e1a11ef4607f",
+    remote = "https://pigweed.googlesource.com/pigweed/pigweed",
 )
 
-# TODO: why am I overriding this here instead of pigweed doing it?
-local_path_override(
-  module_name = "pw_toolchain",
-  path = "third_party/pigweed/pw_toolchain_bazel",
+git_override(
+    module_name = "pw_toolchain",
+    # ROLL: Warning: this entry is automatically updated.
+    # ROLL: Last updated 2024-08-12.
+    # ROLL: By https://cr-buildbucket.appspot.com/build/8739788060604554929.
+    commit = "17252280da5edda418bd36fed049e1a11ef4607f",
+    remote = "https://pigweed.googlesource.com/pigweed/pigweed",
+    strip_prefix = "pw_toolchain_bazel",
 )
 
 # TODO: why am I overriding this here instead of pigweed doing it?
@@ -35,14 +44,12 @@ git_override(
 #
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
-  configure_coverage_tool = True,
-  python_version = "3.11",
+    configure_coverage_tool = True,
+    python_version = "3.11",
 )
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
-  hub_name = "pip",
-  requirements_lock = "//:requirements_lock.txt",
+    hub_name = "pip",
+    requirements_lock = "//:requirements_lock.txt",
 )
-
-
